@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Emergency Fund Calculator</title>
+  <style>
+    #explanation {
+      display: none;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 5px;
+      font-size: 16px;
+    }
+
+    @media screen and (min-width: 480px) {
+      /* Adjust the width for larger screens */
+      input[type="number"] {
+        width: 400px;
+      }
+    }
+  </style>
+  <script>
+    function calculateEmergencyFund() {
+      // Retrieve input values
+      var monthlyIncome = parseFloat(document.getElementById("monthlyIncome").value);
+      var monthlyExpenses = parseFloat(document.getElementById("monthlyExpenses").value);
+      var allocationPercentage = parseFloat(document.getElementById("allocationPercentage").value);
+
+      // Validate inputs
+      if (isNaN(monthlyIncome) || isNaN(monthlyExpenses) || isNaN(allocationPercentage)) {
+        alert("Invalid input. Please enter valid numbers.");
+        return;
+      }
+
+      // Calculate emergency fund amount
+      var emergencyFund = monthlyExpenses * 6; // Assuming 6 times the monthly expenses for emergency fund
+
+      // Calculate monthly allocation
+      var monthlyAllocation = (monthlyIncome * allocationPercentage) / 100;
+
+      // Calculate months to reach the fund
+      var monthsToReachFund = Math.ceil(emergencyFund / monthlyAllocation);
+
+      // Update the result elements in the HTML
+      document.getElementById("emergencyFundAmount").innerHTML = emergencyFund.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' });
+      document.getElementById("monthlyAllocation").innerHTML = monthlyAllocation.toLocaleString('en-PH', { style: 'currency', currency: 'PHP' });
+      document.getElementById("monthsToReachFund").innerHTML = monthsToReachFund;
+      document.getElementById("explanation").style.display = "block";
+    }
+  </script>
+</head>
+<body>
+
+  <p>Calculate how much you need to save for your emergency fund and how much of your monthly income to allocate towards it.</p>
+
+  <label for="monthlyIncome"><strong>Monthly Income:</strong></label><br>
+  <input type="number" id="monthlyIncome" placeholder="Enter your monthly income" step="0.01" min="0" required><br><br>
+
+  <label for="monthlyExpenses"><strong>Monthly Expenses:</strong></label><br>
+  <input type="number" id="monthlyExpenses" placeholder="Enter your monthly expenses" step="0.01" min="0" required><br><br>
+
+  <label for="allocationPercentage"><strong>Percentage to Allocate:</strong></label><br>
+  <input type="number" id="allocationPercentage" placeholder="Enter the percentage to allocate for the emergency fund" step="0.01" min="0" required><br><br>
+
+  <button onclick="calculateEmergencyFund()">Calculate</button>
+  <br><br><hr>
+  <div id="explanation">
+
+    <h2><strong>Results</strong></h2>
+
+    <p>Your recommended emergency fund amount is: <span id="emergencyFundAmount"></span></p>
+
+    <p>You should allocate <span id="monthlyAllocation"></span> of your monthly income towards your emergency fund.</p>
+
+    <p>It will take approximately <span id="monthsToReachFund"></span> months to reach your emergency fund goal.</p>
+
+    <h2><strong>Why is this the recommended amount for emergency funds?</strong></h2>
+    <p>Financial experts generally recommend having an emergency fund that can cover at least 3 to 6 months of your living expenses. In the case of this calculator, we are assuming a conservative recommendation of 6 times your monthly expenses for the emergency fund.</p>
+    <p>An emergency fund provides a safety net for unexpected events such as job loss, medical emergencies, or major repairs. By saving 6 times your monthly expenses, you can ensure that you have enough funds to cover your essential needs for a reasonable period of time if an unexpected financial setback occurs.</p>
+    <p>Setting aside a percentage of your monthly income towards your emergency fund helps you build up the necessary funds over time. By consistently allocating a portion of your income, you can gradually reach the desired emergency fund amount and provide yourself with financial security.</p>
+    <p>Please note that the recommended amount may vary based on individual circumstances, such as income stability, dependents, and other financial obligations. It's always a good idea to assess your specific needs and consult with a financial advisor for personalized advice.</p>
+  </div>
+</body>
+</html>
